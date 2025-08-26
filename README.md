@@ -210,8 +210,8 @@ Name your update set xml file `ec2-remediation-system.xml`
 ```
 /netflix-ec2-remediation-system
 ├── README.md
-├── ec2-remediation-system.xml (update set file)
-├── Diagram.png (system flow diagram)
+├── ec2-remediation-system.xml
+├── Diagram.png
 ```
 
 ### README.md Content Requirements
