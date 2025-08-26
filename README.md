@@ -27,7 +27,7 @@
 
 ## System Resources and Context
 
-**Netflix's AWS Integration Server:** Netflix operates an external monitoring system called the AWS Integration Server that continuously monitors EC2 instance health across all AWS regions and integrates with ServiceNow infrastructure. This server automatically populates your custom tables with real EC2 instance data every 10 minutes. When you create your tables with the correct naming and scope, this system will detect them and begin sending instance information (ID, name, and status \- "ON" for operational, "OFF" for failed/stopped instances).
+**Netflix's AWS Integration Server:** Netflix operates an external monitoring system called the AWS Integration Server that continuously monitors EC2 instance health across all AWS regions and integrates with ServiceNow infrastructure. This server automatically populates your custom tables with real EC2 instance data every minute. When you create your tables with the correct naming and scope, this system will detect them and begin sending instance information (ID, name, and status \- "ON" for operational, "OFF" for failed/stopped instances).
 
 **What You Receive:**
 
@@ -112,7 +112,7 @@ Reference [official documentation]([https://developer.servicenow.com/dev.do#!/le
 
 ### Step 2: Table Structure Requirements
 
-**Important:** Once you create the EC2 Instance table with the correct name and scope, the AWS Integration Server will automatically populate it with EC2 instance data (instance ID and status) every 10 minutes. The instances will periodically turn "OFF" to provide opportunities for testing your remediation system.
+**Important:** Once you create the EC2 Instance table with the correct name and scope, the AWS Integration Server will automatically populate it with EC2 instance data (instance ID and status) every 10 minutes. The instances will turn "OFF" every 10 minutes to provide opportunities for testing your remediation system.
 
 **EC2 Instance Table:** Create with table name `EC2 Instance` in your scoped application.
 
