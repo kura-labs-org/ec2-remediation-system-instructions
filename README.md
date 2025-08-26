@@ -15,7 +15,7 @@
 ### Required System Architecture
 
 ```
-AWS EC2 → AWS Integration Server → ServiceNow Custom Table → Flow Designer → Manual Remediation via AWS Integration Server API
+AWS EC2 → AWS Integration Server → ServiceNow Custom Table → Flow Designer (Incident Creation + AI Search + Slack Notifications) → Manual Remediation via AWS Integration Server API
 ```
 
 **System Components:**
