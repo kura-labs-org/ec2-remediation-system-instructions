@@ -13,16 +13,14 @@
 ## Assignment Objectives
 
 ### Required System Architecture
-
 ```
 AWS EC2 → AWS Integration Server → ServiceNow Custom Table → Flow Designer (Incident Creation + AI Search + Slack Notifications) → Manual Remediation via AWS Integration Server API
 ```
 
 **System Components:**
-
 - External monitoring detects EC2 failure
-- REST API updates ServiceNow custom tables
-- Flow Designer creates incidents and sends Slack notifications
+- REST API updates ServiceNow custom tables  
+- Flow Designer creates incidents, performs AI Search for knowledge articles, and sends Slack notifications
 - DevOps engineers trigger manual remediation via UI Action
 - Remediation Helper calls AWS Integration Server API
 - All attempts logged for audit trail
@@ -30,20 +28,19 @@ AWS EC2 → AWS Integration Server → ServiceNow Custom Table → Flow Designer
 ### Implementation Objectives
 
 1. **Build EC2 Monitoring Infrastructure**
-
    - Create custom tables to track EC2 instance status and remediation attempts
    - Establish secure AWS integration for automated remediation calls
-2. **Implement AI-Powered Knowledge Retrieval**
 
+2. **Implement AI-Powered Knowledge Retrieval**
    - Configure AI Search to surface relevant remediation documentation
    - Create knowledge base articles that AI can discover during incidents
-3. **Enable DevOps Team Workflow**
 
+3. **Enable DevOps Team Workflow**
    - Provide one-click remediation interface for DevOps engineers
    - Create automated incident response with Slack notifications
    - Log all remediation attempts for audit and analysis
-4. **Test and Validate the Working System**
 
+4. **Test and Validate the Working System**
    - Demonstrate successful EC2 remediation workflow
    - Verify AI knowledge retrieval functionality
    - Confirm incident creation and Slack notification delivery
@@ -51,41 +48,37 @@ AWS EC2 → AWS Integration Server → ServiceNow Custom Table → Flow Designer
 ## Critical Configuration Requirements
 
 ### Application Setup
-
 **Create a scoped application with the exact name:** `EC2 Monitoring and Remediation`
 
 This precise naming is required for AWS integration compatibility and must match Netflix's internal system specifications.
 
 ### AWS Integration Configuration
-
 The following naming conventions are **mandatory** for the remediation system to function:
 
 **Connection & Credential Alias:**
-
 - **Name:** `AWS Integration Server C C Alias`
 - **Must be created within your scoped application**
 
 **HTTP Connection:**
-
-- **Name:** `AWS Integration Server Connection`
+- **Name:** `AWS Integration Server Connection` 
 - **Host:** `codon-staging.emaginelc.com`
 - **Base path:** `/api/v1/queue/start`
 - **Use the URL builder to construct the connection properly**
 
 **Basic Auth Credentials:**
-
 - **Name:** `AWS Integration Server Credentials`
 - **Username:** `admin`
 - **Password:** (will be provided via Slack DM)
 
 ### Table Structure Requirements
 
+**Important:** Once you create the EC2 Instance table with the correct name and scope, the AWS Integration Server will automatically populate it with EC2 instance data (instance ID and status) every 10 minutes. The instances will periodically turn off to provide opportunities for testing your remediation system.
+
 **EC2 Instance Table:** Create with table name `EC2 Instance` in your scoped application.
 
 Required fields (note that some fields are automatically created by ServiceNow, others must be manually added):
-
 - Instance name (String, 40 characters)
-- Instance ID (String, 40 characters)
+- Instance ID (String, 40 characters) 
 - Instance status (String, 40 characters)
 - Created (Date/Time) - auto-created
 - Created by (String, 40 characters) - auto-created
@@ -96,7 +89,6 @@ Required fields (note that some fields are automatically created by ServiceNow, 
 **Remediation Log Table:** Create with table name `Remediation Log` in your scoped application.
 
 Required fields:
-
 - EC2 Instance (Reference to EC2 Instance table)
 - Attempted Status (String, 40 characters)
 - Success (True/False)
@@ -115,14 +107,11 @@ Required fields:
 ## Implementation Requirements
 
 ### UI Action and Script Include
-
 Use the provided code files from the GitHub repository:
-
 - `trigger_EC2_Remediation.js` for the UI Action
 - `EC2RemediationHelper.js` for the Script Include
 
 **UI Action Configuration:**
-
 - **Name:** `Trigger EC2 Remediation`
 - **Table:** EC2 Instance (your scoped table)
 - **Action name:** `trigger_EC2_remediation`
@@ -132,8 +121,7 @@ Use the provided code files from the GitHub repository:
 - **Client:** Checked
 - **List v2 Compatible:** Checked
 
-**Script Include Configuration:**
-
+**Script Include Configuration:**  
 - **Name:** `EC2RemediationHelper`
 - **API Name:** `x_snc_ec2_monito_0.EC2RemediationHelper` (auto-generated in scope)
 - **Accessible from:** This application scope only
@@ -143,40 +131,32 @@ Use the provided code files from the GitHub repository:
 Both components must be created within your scoped application.
 
 ### Flow Designer Workflow
-
 Create a Flow Designer workflow within your scoped application that:
-
 - Triggers when EC2 instance status indicates failure
 - Uses the provided AI Search Custom action script
-- Creates incident records for failed instances
+- Creates incident records for failed instances  
 - Sends Slack notifications using webhook (URL provided via Slack DM)
 
 **Important:** Use Flow Designer's "Force Save" option to ensure all workflow components are included in your update set.
 
 ### AI Search Integration
-
 Research and configure AI Search using the ServiceNow documentation: https://www.servicenow.com/docs/bundle/yokohama-platform-administration/page/administer/ai-search/concept/configuring-ais.html
 
 Your AI Search action must be able to discover and retrieve relevant EC2 remediation knowledge articles during workflow execution.
 
 ### Knowledge Base Content
-
 Create at least one knowledge base article containing EC2 remediation guidance. Include these keywords to ensure AI Search discoverability:
-
 - EC2, server, instance, restart, AWS, virtual machine, cloud server, EC2 server, reboot
 
 ## Testing and Validation
 
 ### DevOps User Testing
-
-1. Create test EC2 instance records with failure status
+1. **Verify AWS Integration:** When you've successfully created your EC2 Instance table with the correct name and scope, the AWS Integration Server will automatically populate your table with EC2 information and status updates
 2. Use the "Trigger EC2 Remediation" button to demonstrate the remediation workflow
 3. Verify entries are created in the Remediation Log table when DevOps engineers click the remediation button
 
 ### System Verification
-
 **AI Search Execution Logs:** Verify AI Search functionality by checking System Logs:
-
 - Navigate to: System Logs > System Log > All
 - Filter: All > Created on Today > Level >= Information > Message starts with "AI Search"
 - Confirm your workflow successfully retrieved knowledge articles
@@ -185,22 +165,26 @@ Create at least one knowledge base article containing EC2 remediation guidance. 
 
 **Slack Integration:** Confirm Slack notifications are delivered to the DevOps channel using your assigned webhook URL.
 
-### Access Control Discovery
+### Access Control Requirements
+Include these essential ACL records in your update set to ensure system functionality:
 
-Navigate to: System Security > Access Control (ACL)
-Filter by: Type = "record" and Name = your custom table names
-Include relevant ACL records in your update set to ensure proper security configuration.
+**Navigate to:** System Security > Access Control (ACL)
+
+**Required ACLs:**
+- **Table ACLs:** Filter by Type = "record" and Name = your custom table names (EC2 Instance and Remediation Log tables)
+- **Script Include ACL:** Filter by Name = "EC2RemediationHelper" 
+- **UI Action ACL:** Filter by Name = "Trigger Remediation"
+
+Add these ACL records to your update set by opening each record and selecting "Add to Update Set".
 
 ## Deliverables
 
 ### Update Set Requirements
-
 Your update set must contain these working components:
 
 **Core System Components:**
-
 - UI Action: "Trigger EC2 Remediation"
-- Script Include: `EC2RemediationHelper`
+- Script Include: `EC2RemediationHelper` 
 - Custom Tables: EC2 Instance and Remediation Log
 - Connection & Credential Alias: `AWS Integration Server C C Alias`
 - HTTP Connection: `AWS Integration Server Connection`
@@ -210,7 +194,6 @@ Your update set must contain these working components:
 - Relevant ACL records for custom tables
 
 **Evidence of Working System:**
-
 - Test EC2 Instance Records showing sample data
 - Test Remediation Log Entries created by clicking the remediation button
 - Test Incident Record created by the flow when triggered
@@ -220,20 +203,18 @@ Your update set must contain these working components:
 
 ### GitHub Repository Structure
 
-Name your repo ``netflix-ec2-remediation-system``
-Name your diagram ``Diagram.png``
-
-Name your update set xml file ``ec2-remediation-system.xml``
+Name your repo `netflix-ec2-remediation-system`
+Name your diagram `Diagram.png`
+Name your update set xml file `ec2-remediation-system.xml`
 
 ```
 /netflix-ec2-remediation-system
 ├── README.md
-├── ec2-remediation-system.xml
-├── Diagram.png
+├── ec2-remediation-system.xml (update set file)
+├── Diagram.png (system flow diagram)
 ```
 
 ### README.md Content Requirements
-
 - **System Overview:** Description of the EC2 remediation system for DevOps teams
 - **Implementation Summary:** Key configuration decisions and integration points
 - **Architecture Diagram:** Visual representation of the complete workflow
@@ -241,15 +222,13 @@ Name your update set xml file ``ec2-remediation-system.xml``
 - **DevOps Usage:** Instructions for Netflix DevOps engineers on using the remediation system
 
 ### Architecture Diagram Requirements
-
 Create a system flow diagram showing:
-
 - EC2 failure detection and ServiceNow integration
 - AI Search knowledge retrieval process
 - DevOps remediation workflow with Slack notifications
 - Incident creation and logging workflow
 
-Use Draw.io and save as `architecture-diagram.png`
+Use Draw.io and save as `Diagram.png`
 
 ## Submission Requirements
 
@@ -259,7 +238,6 @@ Use Draw.io and save as `architecture-diagram.png`
 4. Submit your repository URL
 
 **Critical Success Factors:**
-
 - All component naming must match the specifications exactly
 - The remediation button must successfully create log entries
 - AI Search must retrieve knowledge articles (verified in system logs)
