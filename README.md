@@ -143,19 +143,20 @@ The following naming conventions are **mandatory** for the remediation system to
 
 **ServiceNow Connection & Credential Alias:**
 
+- **Must be created within your scoped application**
 - **Navigate to:** Connection & Credential Aliases
 - **Create the following Connection and Credential Alias:**
 - **Name:** `AWS Integration Server C C Alias`
-- **Must be created within your scoped application**
 
 **ServiceNow HTTP Connection:**
 
+- **Use the URL builder to construct the connection properly**
 - **Navigate to:** Connection & Credential Aliases \> Connection
 - **Create the following Connection:**
 - **Name:** `AWS Integration Server Connection`
 - **Host:** `codon-staging.emaginelc.com`
 - **Base path:** `/api/v1/queue/start`
-- **Use the URL builder to construct the connection properly**
+
 
 **ServiceNow Credential Records (Type: Basic Auth):**
 
@@ -167,6 +168,8 @@ The following naming conventions are **mandatory** for the remediation system to
 - **Password:** Use your ServiceNow instance login password for basic authentication with AWS Integration Server
 
 ### Step 4: UI Action and Script Include Implementation
+
+**Both components must be created within your scoped application.**
 
 Use the provided code files from the GitHub repository:
 
@@ -193,8 +196,6 @@ Use the provided code files from the GitHub repository:
 - **Accessible from:** This application scope only
 - **Glide AJAX enabled:** Checked
 - **Active:** Checked
-
-Both components must be created within your scoped application.
 
 ### Step 5: Flow Designer Workflow Creation
 
