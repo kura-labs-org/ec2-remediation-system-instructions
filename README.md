@@ -228,7 +228,7 @@ Research what AI Search Apps are available on your instance and understand what 
 You can find the Search Apps by navigating to **All\>AI Search Admin\>AI Search Admin Home\>Applications** in your instance. 
 
 Here’s a guide on how you can test the **AI Search Custom** Action and familiarize yourself with its function:  
-https://scribehow.com/viewer/Run\_a\_Test\_for\_Laptop\_Articles\_in\_ServiceNow\_\_j6fD3CTxSRKIVuz7C47nzg
+[https://scribehow.com/viewer/Exploring_the_Workflow_Action_AI_Search_Custom__j6fD3CTxSRKIVuz7C47nzg?referrer=workspace](https://scribehow.com/viewer/Exploring_the_Workflow_Action_AI_Search_Custom__j6fD3CTxSRKIVuz7C47nzg?referrer=workspace)
 
 Reference ServiceNow documentation on AI Search and AI Search Apps: [https://www.servicenow.com/docs/bundle/yokohama-platform-administration/page/administer/ai-search/concept/configuring-ais.html](https://www.servicenow.com/docs/bundle/yokohama-platform-administration/page/administer/ai-search/concept/configuring-ais.html)
 
