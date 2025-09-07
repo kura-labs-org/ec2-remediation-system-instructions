@@ -103,7 +103,7 @@ Reference [official documentation]([https://developer.servicenow.com/dev.do#!/le
 
 ### Step 2: Table Structure Requirements
 
-**Important:** Once you create the EC2 Instance table with the correct name and scope, the AWS Integration Server will automatically populate it with EC2 instance data (instance ID and status) every minute. The instances will turn "OFF" every minute to provide opportunities for testing your remediation system.
+**Important:** Once you create the EC2 Instance table with the correct name and scope, the AWS Integration Server will automatically populate it with EC2 instance data (instance ID and status) every minute. The instances will turn "OFF" every 10 minutes to provide opportunities for testing your remediation system.
 
 **EC2 Instance Table:** Create table name `EC2 Instance` in your scoped application.
 
