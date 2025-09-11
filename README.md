@@ -286,7 +286,7 @@ Your update set must contain these working components:
 - **Navigate to:** System Security \> Access Control (ACL)
 - **Table ACLs:** Filter by Type \= "record" and Name \= your custom table names (EC2 Instance and Remediation Log tables)
 - **Script Include ACL:** Filter by Name \= "EC2RemediationHelper"
-- **UI Action ACL:** Filter by Name \= "Trigger Remediation"
+~~ - UI Action ACL:** Filter by Name \= "Trigger Remediation" ~~
 
 Add these ACL records to your update set by opening each record and selecting "Add to Update Set".
 
